@@ -5,7 +5,17 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
-  server:{
-    host:'0.0.0.0'
+  server: {
+    host: '0.0.0.0',
+    proxy: {
+      '/auth': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      }
+    }
   }
 })

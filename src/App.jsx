@@ -1,5 +1,12 @@
 import { useEffect, useRef } from "react";
 import About1 from "./pages/about.jsx";
+import Contact from "./pages/contact.jsx";
+import Landing from "./pages/landing.jsx";
+import Companies from "./pages/pastshadows.jsx";
+import Gallery from "./pages/gallery.jsx";
+import Navbar from "./components/navbar.jsx";
+import Team from "./pages/team.jsx";
+import Faqs from "./pages/faqs.jsx";
 import Testimonials from "./pages/testimonials.jsx";
 
 function loadScript(src) {
@@ -56,7 +63,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-transparent ">
       {/* Vanta background — fixed, behind everything */}
       <div
         ref={vantaRef}
@@ -65,9 +72,39 @@ export default function About() {
 
       {/* Content sits above the background */}
       <div className="relative z-10">
+      <Navbar></Navbar>
+       <section >
+        <Landing></Landing>
+       </section>
+
+        <section id="about">
         <About1 />
+        </section>
+
+        <section id="testimonials">
         <Testimonials></Testimonials>
-      </div>
+        </section>
+
+        <section id="gallery">
+        <Gallery></Gallery>
+         </section>
+
+         <section id="faqs">
+          <Faqs></Faqs>
+         </section>
+
+         <section id="pastshadows">
+          <Companies></Companies>
+         </section>
+         
+         <section id="team">
+          <Team></Team>
+         </section>
+
+        <section id="contact">
+          <Contact></Contact>
+         </section>
+    </div>
     </div>
   );
 }
