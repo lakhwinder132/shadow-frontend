@@ -43,7 +43,7 @@ export default function Signup(){
           bg-blue-900 hover:bg-blue-700
           " onClick={onclick}>Signin</button>
           </div></div>
-          <div className="text-white"> Don't have account,<b className="hover:text-blue-500"><a href="/signup">CREATE ONE</a></b> </div>
+          <div className="text-white"> Don't have account,<b className="hover:text-blue-500"><button classname="bg-transparent" onClick={()=>{navigate('/signup');}}>CREATE ONE</button></b> </div>
           </div>
     </div>)
 }
