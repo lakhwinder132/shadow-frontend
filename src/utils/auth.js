@@ -1,6 +1,8 @@
 // src/utils/auth.js
 
-export function getTokenExpiry(token) {  // ← remove async
+const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+
+export function getTokenExpiry(token) {
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
     return payload.exp * 1000;
@@ -10,7 +12,7 @@ export function getTokenExpiry(token) {  // ← remove async
 }
 
 export function isTokenExpired(token) {
-  const expiry = getTokenExpiry(token);  // now returns value not Promise
+  const expiry = getTokenExpiry(token);
   if (!expiry) return true;
   return Date.now() > expiry;
 }
@@ -24,7 +26,7 @@ export async function refreshAccessToken() {
     return null;
   }
 
-  const res = await fetch("/api/token/refresh/", {
+  const res = await fetch(`${API_BASE}/api/token/refresh/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refresh }),
@@ -43,7 +45,6 @@ export async function refreshAccessToken() {
 
 export async function apiFetch(url, options = {}) {
   let token = localStorage.getItem("access_token");
-  console.log("token:", token);
 
   if (isTokenExpired(token)) {
     token = await refreshAccessToken();
@@ -53,8 +54,8 @@ export async function apiFetch(url, options = {}) {
   options.headers = {
     ...options.headers,
     "Content-Type": "application/json",
-    ...(token && { "Authorization": `Bearer ${token}` }), // ← only attach if token exists
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
-  return fetch(url, options);
+  return fetch(`${API_BASE}${url}`, options);
 }
